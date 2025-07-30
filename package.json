@@ -1,10 +1,11 @@
 {
   "name": "fhir-react-19",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "React component library for displaying FHIR Resources ",
   "main": "build/index.js",
   "peerDependencies": {
-    "react": "^19.1.1"
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
   },
   "dependencies": {
     "@nivo/core": "^0.78.0",
