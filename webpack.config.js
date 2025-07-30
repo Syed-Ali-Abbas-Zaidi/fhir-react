@@ -8,7 +8,7 @@ module.exports = {
   output: {
     path: path.resolve(__dirname, 'build'),
     filename: 'index.js',
-    libraryTarget: 'commonjs2', // THIS IS THE MOST IMPORTANT LINE! :mindblow: I wasted more than 2 days until realize this was the line most important in all this guide.
+    libraryTarget: 'commonjs2',
   },
   module: {
     rules: [
@@ -19,8 +19,27 @@ module.exports = {
         use: {
           loader: 'babel-loader',
           options: {
-            presets: ['@babel/preset-env'],
-            plugins: ['@babel/plugin-proposal-object-rest-spread'],
+            presets: [
+              [
+                '@babel/preset-env',
+                {
+                  targets: {
+                    node: 'current',
+                  },
+                },
+              ],
+              [
+                '@babel/preset-react',
+                {
+                  runtime: 'automatic',
+                },
+              ],
+            ],
+            plugins: [
+              '@babel/plugin-proposal-object-rest-spread',
+              '@babel/plugin-proposal-nullish-coalescing-operator',
+              '@babel/plugin-proposal-optional-chaining',
+            ],
           },
         },
       },
@@ -49,7 +68,18 @@ module.exports = {
     ],
   },
   externals: {
-    react: 'commonjs react', // this line is just to use the React dependency of our parent-testing-project instead of using our own React.
+    react: {
+      commonjs: 'react',
+      commonjs2: 'react',
+      amd: 'React',
+      root: 'React',
+    },
+    'react-dom': {
+      commonjs: 'react-dom',
+      commonjs2: 'react-dom',
+      amd: 'ReactDOM',
+      root: 'ReactDOM',
+    },
   },
   plugins: [
     new MiniCssExtractPlugin({
